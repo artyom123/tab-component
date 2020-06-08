@@ -19,13 +19,13 @@ const propTypes = {
 }
 
 const defaultProps = {
-    value: 0,
+    value: 1,
     text: [],
 };
 
 const Tabs = ({ value, text }) => {
     const refSelected = useRef(null);
-    const refButton = useRef(null);
+    const refActive = useRef(null);
     
     const [tabs, setTabs] = useState([]);
     const [selectedElementStyle, setSelectedElementStyle] = useState({});
@@ -47,12 +47,12 @@ const Tabs = ({ value, text }) => {
     }, [value, text]);
 
     useEffect(() => {
-        const buttonElement = refButton.current;
+        const activeElement = refActive.current;
 
-        if (buttonElement) {
+        if (activeElement) {
             const {
-                left = value * buttonElement.offsetLeft,
-                width = buttonElement.offsetWidth,
+                left = activeElement.offsetLeft,
+                width = activeElement.offsetWidth,
                 color = findChecked(tabs).color
             } = selectedElementStyle;
 
@@ -61,7 +61,7 @@ const Tabs = ({ value, text }) => {
 
             selectedElement.setAttribute("style", attribute);
         }
-    }, [selectedElementStyle, tabs, refButton, value]);
+    }, [selectedElementStyle, tabs, refActive, value]);
 
     const handleClick = useCallback(({ target }, { color, id }) => {
         const tabsNew = tabs.map((tab) => {
@@ -83,7 +83,7 @@ const Tabs = ({ value, text }) => {
             ({ id, checked, color, name }) => 
                 <button
                     key={id}
-                    ref={refButton}
+                    ref={refActive}
                     className={`tabs-button${checked ? ' active' : ''}`}
                     onClick={(event) => handleClick(event, { color, id })}
                 >

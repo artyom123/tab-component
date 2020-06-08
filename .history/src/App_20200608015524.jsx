@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <div className="App-header">
         <div className="App-header-container">
-          <Tabs value={1}/>
+          <Tabs value={2}/>
         </div>
       </div>
     </div>
